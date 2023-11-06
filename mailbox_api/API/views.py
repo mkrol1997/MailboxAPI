@@ -1,3 +1,11 @@
-from django.shortcuts import render
+from rest_framework.generics import (
+    ListCreateAPIView,
+)
 
-# Create your views here.
+from API.models import Mailbox
+from API.serializers import MailboxSerializer
+
+
+class MailboxView(ListCreateAPIView):
+    queryset = Mailbox.objects.all()
+    serializer_class = MailboxSerializer
