@@ -3,8 +3,8 @@ from rest_framework.generics import (
     RetrieveUpdateDestroyAPIView,
 )
 
-from API.models import Mailbox, Template
-from API.serializers import MailboxSerializer, TemplateSerializer
+from API.models import Mailbox, Template, Email
+from API.serializers import MailboxSerializer, TemplateSerializer, EmailSerializer
 
 
 class MailboxView(ListCreateAPIView):
@@ -22,6 +22,11 @@ class TemplateView(ListCreateAPIView):
     serializer_class = TemplateSerializer
 
 
-class TemplateDetailView(ListCreateAPIView):
+class TemplateDetailView(RetrieveUpdateDestroyAPIView):
     queryset = Template.objects.all()
     serializer_class = TemplateSerializer
+
+
+class EmailView(ListCreateAPIView):
+    queryset = Email.objects.all()
+    serializer_class = EmailSerializer

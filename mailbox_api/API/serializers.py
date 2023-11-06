@@ -1,6 +1,5 @@
-from rest_framework import serializers
-
 from API.models import Mailbox, Template, Email
+from rest_framework import serializers
 
 
 class MailboxSerializer(serializers.ModelSerializer):
