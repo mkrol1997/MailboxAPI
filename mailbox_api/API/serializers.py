@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from mailbox_drf_api.mailbox_api.API.models import Mailbox, Template, Email
+from API.models import Mailbox, Template, Email
 
 
 class MailboxSerializer(serializers.ModelSerializer):
@@ -10,7 +10,7 @@ class MailboxSerializer(serializers.ModelSerializer):
         model = Mailbox
         fields = '__all__'
 
-    def emails_sent(self, obj):
+    def get_sent(self, obj):
         return obj.sent
 
 
