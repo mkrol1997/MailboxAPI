@@ -27,8 +27,8 @@ class Template(models.Model):
 
 
 class Email(models.Model):
-    mailbox = models.ForeignKey(Mailbox, on_delete=models.SET_NULL)
-    template = models.ForeignKey(Template, on_delete=models.SET_NULL)
+    mailbox = models.ForeignKey(Mailbox, on_delete=models.CASCADE)
+    template = models.ForeignKey(Template, on_delete=models.CASCADE)
     to = ArrayField(
         base_field=models.EmailField(),
         size=None,
