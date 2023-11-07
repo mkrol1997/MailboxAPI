@@ -5,7 +5,7 @@ from django.contrib.postgres.fields import ArrayField
 class Mailbox(models.Model):
     host = models.CharField(max_length=35, blank=False)
     port = models.IntegerField(default=465, blank=False)
-    login = models.CharField(max_length=20, blank=False)
+    login = models.CharField(max_length=40, blank=False)
     password = models.CharField(max_length=20, blank=False)
     email_from = models.CharField(max_length=35, blank=False)
     use_ssl = models.BooleanField(default=True, blank=False)
