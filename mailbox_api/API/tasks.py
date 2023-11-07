@@ -7,11 +7,14 @@ from email.mime.text import MIMEText
 import os
 from .models import Mailbox, Template, Email
 from celery import Celery
+import logging
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mailbox_api.settings')
 
 app = Celery("mailbox_api")
 app.config_from_object('django.conf:settings', namespace='CELERY')
+
+logger = logging.getLogger('api_logger')
 
 
 @app.task()
@@ -23,10 +26,8 @@ def send_email(json_data, email_id):
     template = Template.objects.get(id=data['template'])
 
     if not mailbox.is_active:
-        return {
-            'errors': f'Mailbox SSL is not active. Enable SSL to use this Mailbox <id: {mailbox.id}>',
-            'status': 403,
-        }
+        logger.error(f'Mailbox SSL is not active. Enable SSL to use this Mailbox <id: {mailbox.id}>')
+        return
 
     smtp_server = mailbox.host
     smtp_port = mailbox.port
@@ -54,12 +55,12 @@ def send_email(json_data, email_id):
                 server.sendmail(sender_username, sender_username, msg.as_string())
         except Exception as e:
             retries -= 1
-            return {'errors': e, 'status': 400}
+            logger.error(e)
         else:
             from datetime import date
 
             Email.objects.filter(id=email_id).update(sent_date=date.today())
-            return {'status': 201, 'msg': 'CREATED'}
+            return
 
 
 """

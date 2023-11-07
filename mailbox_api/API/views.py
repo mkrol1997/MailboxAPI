@@ -34,6 +34,6 @@ class EmailView(ListCreateAPIView):
     serializer_class = EmailSerializer
 
     def perform_create(self, serializer):
-        obj = serializer.save()
+        email_object = serializer.save()
         serialized_json = JSONRenderer().render(serializer.data)
-        send_email.delay(serialized_json, obj.id)
+        send_email.delay(serialized_json, email_object.id)
