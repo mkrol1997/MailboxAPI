@@ -1,0 +1,43 @@
+version: "3.9"
+
+services:
+  api:
+    build: .
+    entrypoint: ["/bin/sh", "-c"]
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - postgres
+    command:
+      - |
+        python manage.py makemigrations
+        python manage.py migrate
+        python manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+
+  celery:
+    build: .
+    env_file:
+      - .env
+    environment:
+      - DJANGO_SETTINGS_MODULE=mailbox_api.settings
+
+    depends_on:
+      - api
+      - redis
+      - postgres
+    entrypoint: python3 -m celery -A mailbox_api worker -l INFO
+
+  redis:
+    image: redis:7-alpine
+
+  postgres:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER
+      - POSTGRES_PASSWORD
+      - POSTGRES_DB
+    ports:
+       - "5432:5432"
