@@ -119,8 +119,8 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+MEDIA_URL = '/attachments/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'attachments/')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -129,3 +129,30 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CELERY_BROKER_URL = "redis://redis:6379/0"
 CELERY_RESULT_BACKEND = "redis://redis:6379/0"
+
+
+LOG_FILE_DIR = os.path.join(BASE_DIR, 'API/logs/email.log')
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': LOG_FILE_DIR,
+            'formatter': 'logger_formatter',
+        },
+    },
+    'formatters': {
+        'logger_formatter': {
+            'format': '%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+        },
+    },
+    'loggers': {
+        'api_logger': {
+            'handlers': ['file'],
+            'level': 'ERROR',
+        },
+    },
+}
+
