@@ -4,6 +4,7 @@ from rest_framework import serializers
 
 class MailboxSerializer(serializers.ModelSerializer):
     sent = serializers.SerializerMethodField()
+    password = serializers.SerializerMethodField()
 
     class Meta:
         model = Mailbox
@@ -11,6 +12,9 @@ class MailboxSerializer(serializers.ModelSerializer):
 
     def get_sent(self, obj):
         return obj.sent
+
+    def get_password(self, obj):
+        return '*' * len(obj.password)
 
 
 class TemplateSerializer(serializers.ModelSerializer):
@@ -21,7 +25,9 @@ class TemplateSerializer(serializers.ModelSerializer):
 
 
 class EmailSerializer(serializers.ModelSerializer):
+    sent_date = serializers.DateField(read_only=True)
 
     class Meta:
         model = Email
         fields = "__all__"
+
