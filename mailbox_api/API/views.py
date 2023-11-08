@@ -29,9 +29,21 @@ class TemplateDetailView(RetrieveUpdateDestroyAPIView):
     serializer_class = TemplateSerializer
 
 
+from django_filters import rest_framework as filters
+
+
+class EmailFilter(filters.FilterSet):
+    sent_date = filters.BooleanFilter(field_name='sent_date', lookup_expr='isnull')
+
+    class Meta:
+        model = Email
+        fields = ['sent_date']
+
+
 class EmailView(ListCreateAPIView):
     queryset = Email.objects.all()
     serializer_class = EmailSerializer
+    filterset_class = EmailFilter
 
     def perform_create(self, serializer):
         email_object = serializer.save()
