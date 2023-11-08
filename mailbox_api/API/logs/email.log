@@ -1,0 +1,3 @@
+2023-11-08 11:04:09,486 - api_logger - ERROR - (535, b'5.7.8 Username and Password not accepted. Learn more at\n5.7.8  https://support.google.com/mail/?p=BadCredentials y25-20020a0565123f1900b00501ce0cacb6sm632847lfa.188 - gsmtp')
+2023-11-08 11:04:10,747 - api_logger - ERROR - (535, b'5.7.8 Username and Password not accepted. Learn more at\n5.7.8  https://support.google.com/mail/?p=BadCredentials r25-20020ac252b9000000b00507a1df9224sm628945lfm.289 - gsmtp')
+2023-11-08 11:04:11,922 - api_logger - ERROR - (535, b'5.7.8 Username and Password not accepted. Learn more at\n5.7.8  https://support.google.com/mail/?p=BadCredentials s12-20020a2e9c0c000000b002bfc44dd6b3sm1695328lji.63 - gsmtp')

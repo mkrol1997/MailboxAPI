@@ -9,6 +9,8 @@ services:
     depends_on:
       - redis
       - postgres
+    volumes:
+      - .:/app
     command:
       - |
         python manage.py makemigrations
@@ -23,7 +25,8 @@ services:
       - .env
     environment:
       - DJANGO_SETTINGS_MODULE=mailbox_api.settings
-
+    volumes:
+      - .:/app
     depends_on:
       - api
       - redis
